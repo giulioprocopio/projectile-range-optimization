@@ -1,0 +1,320 @@
+\documentclass[a4paper,10pt]{article}
+
+\usepackage{amsmath}
+
+\begin{document}
+
+\title{Optimization of Projectile Range}
+\author{Giulio Procopio}
+\date{January 2024}
+
+\maketitle
+
+\section{Introduction}
+
+Given a projectile
+thrown with initial velocity $\vec{v_0}$
+from a height $y_0$,
+what is the optimal angle $\theta^*$
+between such velocity and the horizontal plane
+in order to maximize its range?
+
+We will show that the optimal angle is, more generally,
+not always $45^\circ$;
+such angle is indeed dependent
+from the initial state of the projectile
+(i.e. its initial velocity and height).
+
+\section{Initial State}
+
+Let's consider a projectile
+with initial velocity $\vec{v_0}$.
+We'll study its motion in the plane $x,y$
+from its initial position $(0,y_0)$ at time $t_0$, with $y_0>0$,
+to the ground.
+
+As such, $\vec{v_0} = (v_{0x},v_{0y})$ with $v_{0x}>0$ and $v_{0y}>0$.
+The angle $\theta$ between $\vec{v_0}$ and the horizontal plane is
+$\theta = \arctan\left(\frac{v_{0y}}{v_{0x}}\right)$.
+
+The projectile will be subject to an uniform gravitational acceleration
+$\vec{g}$ with $g\approx9.81\frac{m}{s^2}$ pointing downwards.
+We'll neglect other forces such as air resistance.
+
+\section{Equations of Motion}
+
+The equations of motion for the projectile are
+
+\begin{equation}
+    \begin{cases}
+        x(t) = v_{0x}t\\
+        y(t) = y_0 + v_{0y}t - \frac{1}{2}gt^2
+    \end{cases}
+    , \quad t\geq t_0 = 0
+\end{equation}
+
+From the system above we can derive the 
+function of the projectile's trajectory $y(x)$.
+Remembering that $v_{0x} = v_0\cos\theta$ and $v_{0y} = v_0\sin\theta$,
+we get
+
+\begin{equation}
+    y(x) = y_0 + \tan\theta\cdot x - \frac{g}{2v_0^2\cos^2\theta}x^2
+\end{equation}
+
+Let $r$ be the range of the projectile.
+The point of contact with the ground is given by $(r,0)$, thus
+
+\begin{equation}
+    \begin{aligned}
+        y(r) = 0
+        \implies r & = \frac{
+            -\tan\theta
+            + \sqrt{
+                \tan^2\theta
+                + \frac{
+                    2gy_0
+                }{
+                    v_0^2\cos^2\theta
+                }
+            }
+        }{
+            -\frac{
+                g
+            }{
+                v_0^2\cos^2\theta
+            }
+        }\\
+        & = \frac{
+            v_0^2
+        }{
+            g
+        }
+        \left(
+            \sin\theta
+            + \sqrt{
+                \sin^2\theta
+                + \frac{
+                    2gy_0
+                }{
+                    v_0^2
+                }
+            }
+        \right)
+        \cos\theta
+    \end{aligned}
+\end{equation}
+
+For the sake of simplicity, 
+let $A = \frac{v_0^2}{g}$ 
+and $B = \frac{2gy_0}{v_0^2}$.
+So that, writing $r$ as a function of $\theta$,
+
+\begin{equation}
+    r(\theta) = A\left(
+        \sin\theta
+        + \sqrt{
+            \sin^2\theta
+            + B
+        }
+    \right)
+    \cos\theta
+\end{equation}
+
+\section{Degenerate Case $y_0=0$}
+
+Let's first consider the degenerate case $y_0=0$.
+The term $B$ goes to zero, thus $r(\theta)$ simplifies to
+
+\begin{equation}
+    r(\theta) = A\sin2\theta
+\end{equation}
+
+The range is maximized when the sine is maximum,
+i.e. $\max r(\theta) = r(\theta^*) = A$ when $\theta^* = \frac{\pi}{4}$.
+
+\section{General Case $y_0>0$}
+
+Considering the general case $y_0>0$,
+we evaluate the derivative of $r(\theta)$
+
+\begin{equation}
+    \begin{aligned}
+        \frac{dr}{d\theta} & = A\left[
+            -\sin\theta\left(
+                \sin\theta
+                + \sqrt{
+                    \sin^2\theta
+                    + B
+                }
+            \right)
+            + \cos\theta\left(
+                \cos\theta
+                + \frac{
+                    \sin\theta\cos\theta
+                }{
+                    \sqrt{
+                        \sin^2\theta
+                        + B
+                    }
+                }
+            \right)
+        \right]\\
+        & = A\left(
+            -\sin^2\theta
+            - \sin\theta\sqrt{
+                \sin^2\theta
+                + B
+            }
+            + \cos^2\theta
+            + \frac{
+                \sin\theta\cos^2\theta
+            }{
+                \sqrt{
+                    \sin^2\theta
+                    + B
+                }
+            }
+        \right)
+    \end{aligned}
+\end{equation}
+
+Since $\max r(\theta) = r(\theta^*)$,
+the derivative must be zero when $\theta=\theta^*$.
+
+\begin{equation}
+    \begin{aligned}
+        \frac{
+            dr
+        }{
+            d\theta
+        }(\theta^*) = 0
+        \implies & A\left(
+            -\sin^2\theta^*
+            - \sin\theta^*\sqrt{
+                \sin^2\theta^*
+                + B
+            }
+            + \cos^2\theta^*
+            + \frac{
+                \sin\theta^*\cos^2\theta^*
+            }{
+                \sqrt{
+                    \sin^2\theta^*
+                    + B
+                }
+            }
+        \right) = 0\\
+        \implies & -\sin^2\theta^*\cdot\sqrt{
+            \sin^2\theta^*
+            + B
+        }
+        - \sin\theta^*\cdot\left(
+            \sin^2\theta^*
+            + B
+        \right)\\
+        & + \cos^2\theta^*\cdot\sqrt{
+            \sin^2\theta^*
+            + B
+        }
+        + \sin\theta^*\cos^2\theta^* = 0\\
+        \implies & \left(
+            \cos^2\theta^*
+            - \sin^2\theta^*
+        \right)
+        \sqrt{
+            \sin^2\theta^*
+            + B
+        }
+        = \sin^3\theta^*
+        + B\sin\theta^*
+        - \sin\theta^*\cos^2\theta^*\\
+        \implies & \left(
+            \cos^2\theta^*
+            - \sin^2\theta^*
+        \right)^2\left(
+            \sin^2\theta^*
+            + B
+        \right)
+        = \left(
+            \sin^3\theta^*
+            + B\sin\theta^*
+            - \sin\theta^*\cos^2\theta^*
+        \right)^2\\
+        \implies & \sin^2\theta^*\cos^4\theta^*
+        + B\cos^4\theta^*
+        + \sin^6\theta^*
+        + B\sin^4\theta^*
+        - 2\sin^4\theta^*\cos^2\theta^*\\
+        & - 2B\sin^2\theta^*\cos^2\theta^*
+        = \sin^6\theta^*
+        + B^2\sin^2\theta^*
+        + \sin^2\theta^*\cos^4\theta^*
+        + 2B\sin^4\theta^*\\
+        & - 2B\sin^2\theta^*\cos^2\theta^*
+        - 2\sin^4\theta^*\cos^2\theta^*\\
+        \implies & B
+        - 2B\sin^2\theta^*\cos^2\theta^*
+        = B^2\sin^2\theta^*
+        + 2B\sin^4\theta^*
+    \end{aligned}
+\end{equation}
+
+Dividing both sides by $B$
+and remembering that $\cos^2\theta^* = 1-\sin^2\theta^*$
+
+\begin{equation}
+    \begin{aligned}
+        & 1
+        - 2\sin^2\theta^*\left(
+            1-\sin^2\theta^*
+        \right)
+        = B\sin^2\theta^*
+        + 2\sin^4\theta^*\\
+        \implies & 1
+        - 2\sin^2\theta^*
+        = B\sin^2\theta^*\\
+        \implies & \theta^*
+        = \arcsin\sqrt{
+            \frac{
+                1
+            }{
+                B
+                + 2
+            }
+        }
+    \end{aligned}
+\end{equation}
+
+Note that by setting $B=0$
+we get $\theta^*=\frac{\pi}{4}$,
+as expected from the case $y_0=0$.
+
+\section{Conclusion}
+
+The optimal take-off angle $\theta^*$
+to maximize the projectile range
+is given by
+
+\begin{equation}
+    \theta^* = \arcsin\sqrt{
+        \frac{
+            1
+        }{
+            \frac{
+                2gy_0
+            }{
+                v_0^2
+            }
+            + 2
+        }
+    }
+\end{equation}
+
+For example, a baseball thrown with
+initial velocity $v_0=20\frac{m}{s}$
+from a $y_0=20m$ 5th floor window
+will have an optimal take-off angle of
+$\theta^* \approx 35.3^\circ$.
+
+\end{document}
